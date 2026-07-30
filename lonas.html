@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lonas por metros | Lonas Toba</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        .seccion-lonas {
+            width: 90%;
+            max-width: 1400px;
+            margin: 50px auto;
+        }
+        .seccion-lonas h2 {
+            color: white;
+            font-size: 34px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid #da261c;
+            display: inline-block;
+        }
+        .ancho-info {
+            color: #ccdee4;
+            font-size: 16px;
+            margin-bottom: 25px;
+            display: block;
+        }
+        .ancho-info strong {
+            color: #ff4438;
+        }
+        .grid-lonas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        /* ===== CARDS DE LONAS — OPCIÓN A: MUESTRA DE COLOR ===== */
+        .lona-card {
+            background: #ffffff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .lona-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+        }
+
+        /* Header con info + círculo de color */
+        .lona-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 22px 20px 18px;
+        }
+
+        .lona-color-muestra {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+            border: 3px solid #fff;
+            transition: transform 0.3s ease;
+        }
+        .lona-card:hover .lona-color-muestra {
+            transform: scale(1.1);
+        }
+
+        .lona-card-info {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
+
+        .lona-card h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0 0 3px;
+            letter-spacing: 0.3px;
+        }
+        .lona-card .marca {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 2px;
+        }
+        .lona-card .gramaje {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+            margin: 0 0 6px;
+        }
+        .lona-card .color-nombre {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* Body con input y botón */
+        .lona-card-body {
+            padding: 0 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metros-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex: 1;
+        }
+        .metros-box label {
+            font-size: 10px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+        .metros-box input {
+            width: 100%;
+            padding: 10px 8px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            background: #f8f9fa;
+            color: #1a1a1a;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .metros-box input:focus {
+            outline: none;
+            border-color: #da261c;
+            box-shadow: 0 0 0 3px rgba(218,38,28,0.12);
+            background: #fff;
+        }
+
+        .lona-card button {
+            background: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+        .lona-card button:hover {
+            background: #da261c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(218,38,28,0.3);
+        }
+
+        /* Cristal especial */
+        .lona-card.cristal .lona-color-muestra {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #e3f2fd 100%) !important;
+            border-color: #90caf9;
+        }
+        .lona-card.cristal .color-nombre {
+            color: #0c1e8b;
+        }
+
+        @media (max-width: 600px) {
+            .grid-lonas { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .lona-card-header { padding: 16px 14px 14px; gap: 12px; }
+            .lona-color-muestra { width: 44px; height: 44px; }
+            .lona-card h3 { font-size: 16px; }
+            .lona-card .color-nombre { font-size: 13px; }
+            .lona-card-body { padding: 0 14px 14px; }
+            .lona-card button { padding: 10px 12px; font-size: 11px; }
+        }
+    </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="img/logo/logo.jpeg" alt="Lonas Toba">
+    </div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos de iluminación y varios</a>
+        <a class="activo" href="lonas.html">Lonas por metros o rollos</a>
+        <a href="confeccion.html">Confección</a>
+        <a href="contacto.html">Contacto</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero-lonas">
+        <h1>Lonas por metros o rollos</h1>
+        <p>Encontrá la lona ideal para cada proyecto. Seleccioná el color, indicá los metros que necesitás y agregalo a tu consulta.</p>
+    </section>
+
+    <section class="seccion-lonas">
+        <h2>Zonda 900</h2>
+        <span class="ancho-info">📏 Ancho: <strong>1.50 m</strong> | Se vende por metro de largo (solo enteros)</span>
+        <div class="grid-lonas">
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #192e4a;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #192e4a;">Azul Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-AZUL" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Azul Oscuro', 'Z900-AZUL', 'mts-Z900-AZUL')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #005bba;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #005bba;">Azul Claro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-AZUL-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Azul Claro', 'Z900-AZUL-1', 'mts-Z900-AZUL-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #009c8B;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #009c8B;">Verde Claro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-VERD" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Verde Claro', 'Z900-VERD', 'mts-Z900-VERD')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #30c53b;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #30c53b;">Verde Manzana</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-VERD-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Verde Manzana', 'Z900-VERD-1', 'mts-Z900-VERD-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #00534A;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #00534A;">Verde Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-VERD-2" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Verde Oscuro', 'Z900-VERD-2', 'mts-Z900-VERD-2')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #212721;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #212721;">Negro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-NEGR" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Negro', 'Z900-NEGR', 'mts-Z900-NEGR')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e4eef4;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #e4eef4;">Blanco</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-BLAN" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Blanco', 'Z900-BLAN', 'mts-Z900-BLAN')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #d9d7c6;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #d9d7c6;">Beige</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-BEIG" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Beige', 'Z900-BEIG', 'mts-Z900-BEIG')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e3b452;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #e3b452;">Beige Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-BEIG-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Beige Oscuro', 'Z900-BEIG-1', 'mts-Z900-BEIG-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #6b7975;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #6b7975;">Gris</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-GRIS" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Gris', 'Z900-GRIS', 'mts-Z900-GRIS')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #3a356A;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #3a356A;">Violeta</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-VIOL" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Violeta', 'Z900-VIOL', 'mts-Z900-VIOL')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #b64579;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #b64579;">Fucsia</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-FUCS" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Fucsia', 'Z900-FUCS', 'mts-Z900-FUCS')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #fee900;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #fee900;">Amarillo</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-AMAR" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Amarillo', 'Z900-AMAR', 'mts-Z900-AMAR')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #ff7600;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #ff7600;">Naranja</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-NARA" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Naranja', 'Z900-NARA', 'mts-Z900-NARA')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e52835;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 900</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">900 g/m²</p>
+                        <p class="color-nombre" style="color: #e52835;">Rojo</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z900-ROJO" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 900 900 g/m² - Rojo', 'Z900-ROJO', 'mts-Z900-ROJO')">Agregar a consulta</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-lonas">
+        <h2>Zonda 1100</h2>
+        <span class="ancho-info">📏 Ancho: <strong>1.50 m</strong> | Se vende por metro de largo (solo enteros)</span>
+        <div class="grid-lonas">
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #192e4a;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #192e4a;">Azul Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-AZUL" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Azul Oscuro', 'Z1100-AZUL', 'mts-Z1100-AZUL')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #005bba;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #005bba;">Azul Claro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-AZUL-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Azul Claro', 'Z1100-AZUL-1', 'mts-Z1100-AZUL-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #009c8B;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #009c8B;">Verde Claro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-VERD" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Verde Claro', 'Z1100-VERD', 'mts-Z1100-VERD')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #30c53b;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #30c53b;">Verde Manzana</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-VERD-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Verde Manzana', 'Z1100-VERD-1', 'mts-Z1100-VERD-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #00534A;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #00534A;">Verde Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-VERD-2" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Verde Oscuro', 'Z1100-VERD-2', 'mts-Z1100-VERD-2')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #212721;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #212721;">Negro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-NEGR" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Negro', 'Z1100-NEGR', 'mts-Z1100-NEGR')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e4eef4;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #e4eef4;">Blanco</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-BLAN" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Blanco', 'Z1100-BLAN', 'mts-Z1100-BLAN')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #6b7975;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #6b7975;">Gris</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-GRIS" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Gris', 'Z1100-GRIS', 'mts-Z1100-GRIS')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #ff7600;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #ff7600;">Naranja</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-NARA" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Naranja', 'Z1100-NARA', 'mts-Z1100-NARA')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e52835;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #e52835;">Rojo</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-ROJO" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Rojo', 'Z1100-ROJO', 'mts-Z1100-ROJO')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #fee900;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #fee900;">Amarillo</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-AMAR" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Amarillo', 'Z1100-AMAR', 'mts-Z1100-AMAR')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #d9d7c6;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #d9d7c6;">Beige</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-BEIG" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Beige', 'Z1100-BEIG', 'mts-Z1100-BEIG')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e3b452;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #e3b452;">Beige Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-BEIG-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Beige Oscuro', 'Z1100-BEIG-1', 'mts-Z1100-BEIG-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #b64579;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #b64579;">Fucsia</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-FUCS" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Fucsia', 'Z1100-FUCS', 'mts-Z1100-FUCS')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #3a356A;"></div>
+                    <div class="lona-card-info">
+                        <h3>Zonda 1100</h3>
+                        <p class="marca">Zonda</p>
+                        <p class="gramaje">1100 g/m²</p>
+                        <p class="color-nombre" style="color: #3a356A;">Violeta</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-Z1100-VIOL" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Zonda 1100 1100 g/m² - Violeta', 'Z1100-VIOL', 'mts-Z1100-VIOL')">Agregar a consulta</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-lonas">
+        <h2>Coversol Tropical</h2>
+        <span class="ancho-info">📏 Ancho: <strong>1.50 m</strong> | Se vende por metro de largo (solo enteros)</span>
+        <div class="grid-lonas">
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #009c8B;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #009c8B;">Verde Claro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-VERD" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Verde Claro', 'CST-VERD', 'mts-CST-VERD')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #30c53b;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #30c53b;">Verde Manzana</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-VERD-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Verde Manzana', 'CST-VERD-1', 'mts-CST-VERD-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #00534A;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #00534A;">Verde Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-VERD-2" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Verde Oscuro', 'CST-VERD-2', 'mts-CST-VERD-2')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #005bba;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #005bba;">Azul Claro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-AZUL" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Azul Claro', 'CST-AZUL', 'mts-CST-AZUL')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #d9d7c6;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #d9d7c6;">Beige</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-BEIG" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Beige', 'CST-BEIG', 'mts-CST-BEIG')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e3b452;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #e3b452;">Beige Oscuro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-BEIG-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Beige Oscuro', 'CST-BEIG-1', 'mts-CST-BEIG-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e4eef4;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #e4eef4;">Blanco</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-BLAN" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Blanco', 'CST-BLAN', 'mts-CST-BLAN')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #212721;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #212721;">Negro</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-NEGR" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Negro', 'CST-NEGR', 'mts-CST-NEGR')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #3a356A;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #3a356A;">Violeta</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-VIOL" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Violeta', 'CST-VIOL', 'mts-CST-VIOL')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #b64579;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #b64579;">Fucsia</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-FUCS" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Fucsia', 'CST-FUCS', 'mts-CST-FUCS')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e52835;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #e52835;">Rojo</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-ROJO" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Rojo', 'CST-ROJO', 'mts-CST-ROJO')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #ff7600;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #ff7600;">Naranja</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-NARA" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Naranja', 'CST-NARA', 'mts-CST-NARA')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #fee900;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #fee900;">Amarillo</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-AMAR" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Amarillo', 'CST-AMAR', 'mts-CST-AMAR')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #6b7975;"></div>
+                    <div class="lona-card-info">
+                        <h3>Coversol Tropical</h3>
+                        <p class="marca">Coversol</p>
+                        <p class="gramaje"></p>
+                        <p class="color-nombre" style="color: #6b7975;">Gris</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CST-GRIS" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Coversol Tropical  - Gris', 'CST-GRIS', 'mts-CST-GRIS')">Agregar a consulta</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-lonas">
+        <h2>Cristal</h2>
+        <span class="ancho-info">📏 Ancho: <strong>1.40 / 1.80 / 2.00 m</strong> | Se vende por metro de largo (solo enteros)</span>
+        <div class="grid-lonas">
+            <div class="lona-card cristal">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e3f2fd;"></div>
+                    <div class="lona-card-info">
+                        <h3>Cristal</h3>
+                        <p class="marca">Cristal</p>
+                        <p class="gramaje">1,40m</p>
+                        <p class="color-nombre" style="color: #e3f2fd;">Transparente</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CR-TRAN" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Cristal 1,40m - Transparente', 'CR-TRAN', 'mts-CR-TRAN')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card cristal">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e3f2fd;"></div>
+                    <div class="lona-card-info">
+                        <h3>Cristal</h3>
+                        <p class="marca">Cristal</p>
+                        <p class="gramaje">1,80m</p>
+                        <p class="color-nombre" style="color: #e3f2fd;">Transparente</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CR-TRAN-1" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Cristal 1,80m - Transparente', 'CR-TRAN-1', 'mts-CR-TRAN-1')">Agregar a consulta</button>
+                </div>
+            </div>
+            <div class="lona-card cristal">
+                <div class="lona-card-header">
+                    <div class="lona-color-muestra" style="background-color: #e3f2fd;"></div>
+                    <div class="lona-card-info">
+                        <h3>Cristal</h3>
+                        <p class="marca">Cristal</p>
+                        <p class="gramaje">2,00m</p>
+                        <p class="color-nombre" style="color: #e3f2fd;">Transparente</p>
+                    </div>
+                </div>
+                <div class="lona-card-body">
+                    <div class="metros-box">
+                        <label>🛒 Metros</label>
+                        <input type="number" id="mts-CR-TRAN-2" value="1" min="1" max="100" step="1">
+                    </div>
+                    <button onclick="agregarLona('Cristal 2,00m - Transparente', 'CR-TRAN-2', 'mts-CR-TRAN-2')">Agregar a consulta</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- === CARRITO DE CONSULTAS — Panel Lateral === -->
+<div id="carritoOverlay" class="carrito-overlay"></div>
+<div id="carritoPanel" class="carrito-panel">
+    <div class="carrito-header">
+        <h3>🛒 Tu consulta</h3>
+        <button class="carrito-cerrar" onclick="cerrarCarrito()" aria-label="Cerrar carrito">×</button>
+    </div>
+    <div id="listaCarrito">
+        <div class="carrito-vacio">
+            <div class="carrito-vacio-icono">🛒</div>
+            <p>Todavía no agregaste productos</p>
+            <span class="carrito-vacio-hint">Hacé clic en "Agregar a consulta" en cualquier producto</span>
+        </div>
+    </div>
+    <div class="carrito-footer">
+        <button id="btnEnviarConsulta" onclick="enviarConsultaWhatsApp()" disabled>
+            📱 Enviar por WhatsApp
+        </button>
+    </div>
+</div>
+<button class="carrito-float-btn" onclick="toggleCarrito()" aria-label="Abrir carrito">
+    🛒
+    <span id="contadorFloat" class="carrito-float-badge">0</span>
+</button>
+<!-- ============================= -->
+</body>
+</html>
