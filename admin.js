@@ -199,6 +199,7 @@ function openModalProducto() {
   document.getElementById('prodStock').value = 0;
   document.getElementById('prodStockMin').value = 5;
   document.getElementById('prodPrecio').value = '';
+  if (typeof aplicarCamposCategoria === 'function') aplicarCamposCategoria(false);
   document.getElementById('modalProducto').classList.remove('hidden');
 }
 
@@ -216,15 +217,33 @@ function guardarProducto() {
 
   if (!nombre || !codigo) { alert('Nombre y Codigo son obligatorios'); return; }
 
+  const esSujecion = categoria === 'sujecion';
+  const datos = {
+    nombre, codigo, categoria,
+    marca: document.getElementById('prodMarca').value.trim(),
+    stock, stockMinimo: stockMin,
+    precio: parseFloat(document.getElementById('prodPrecio').value) || 0,
+    imagen: document.getElementById('prodImagen').value.trim(),
+    descripcion: document.getElementById('prodDesc').value.trim(),
+    voltaje: esSujecion ? '' : document.getElementById('prodVoltaje').value.trim(),
+    iluminacion: esSujecion ? '' : document.getElementById('prodIlum').value.trim(),
+    largo: document.getElementById('prodLargo').value.trim(),
+    ancho: document.getElementById('prodAncho').value.trim(),
+    alto: esSujecion ? '' : document.getElementById('prodAlto').value.trim(),
+    contiene: esSujecion ? '' : document.getElementById('prodContiene').value.trim(),
+    color: esSujecion ? document.getElementById('prodIlum').value.trim() : '',
+    trabajoCarga: esSujecion ? document.getElementById('prodVoltaje').value.trim() : '',
+    peso: esSujecion ? document.getElementById('prodAlto').value.trim() : '',
+    cargaRotura: esSujecion ? document.getElementById('prodContiene').value.trim() : ''
+  };
+
   let lista = getProductos();
   if (id) {
     const idx = lista.findIndex(p => p.id == id);
-    if (idx >= 0) {
-      lista[idx] = { ...lista[idx], nombre, codigo, categoria, marca: document.getElementById('prodMarca').value.trim(), stock, stockMinimo: stockMin, precio: parseFloat(document.getElementById('prodPrecio').value) || 0, imagen: document.getElementById('prodImagen').value.trim(), descripcion: document.getElementById('prodDesc').value.trim(), voltaje: document.getElementById('prodVoltaje').value.trim(), iluminacion: document.getElementById('prodIlum').value.trim(), largo: document.getElementById('prodLargo').value.trim(), ancho: document.getElementById('prodAncho').value.trim(), alto: document.getElementById('prodAlto').value.trim(), contiene: document.getElementById('prodContiene').value.trim() };
-    }
+    if (idx >= 0) lista[idx] = { ...lista[idx], ...datos };
   } else {
     const newId = lista.length > 0 ? Math.max(...lista.map(p => p.id)) + 1 : 1;
-    lista.push({ id: newId, nombre, codigo, categoria, marca: document.getElementById('prodMarca').value.trim(), stock, stockMinimo: stockMin, precio: parseFloat(document.getElementById('prodPrecio').value) || 0, imagen: document.getElementById('prodImagen').value.trim(), descripcion: document.getElementById('prodDesc').value.trim(), voltaje: document.getElementById('prodVoltaje').value.trim(), iluminacion: document.getElementById('prodIlum').value.trim(), largo: document.getElementById('prodLargo').value.trim(), ancho: document.getElementById('prodAncho').value.trim(), alto: document.getElementById('prodAlto').value.trim(), contiene: document.getElementById('prodContiene').value.trim() });
+    lista.push({ id: newId, ...datos });
   }
   saveProductos(lista);
   closeModalProducto();
@@ -235,23 +254,25 @@ function guardarProducto() {
 function editarProducto(id) {
   const p = getProductos().find(x => x.id == id);
   if (!p) return;
+  const esSuj = p.categoria === 'sujecion';
   document.getElementById('prodId').value = p.id;
   document.getElementById('tituloModalProd').textContent = 'Editar Producto';
   document.getElementById('prodNombre').value = p.nombre || '';
   document.getElementById('prodCodigo').value = p.codigo || '';
   document.getElementById('prodCategoria').value = p.categoria || 'faros';
+  if (typeof aplicarCamposCategoria === 'function') aplicarCamposCategoria(false);
   document.getElementById('prodMarca').value = p.marca || '';
   document.getElementById('prodStock').value = p.stock || 0;
   document.getElementById('prodStockMin').value = p.stockMinimo || 5;
   document.getElementById('prodPrecio').value = p.precio || '';
   document.getElementById('prodImagen').value = p.imagen || '';
   document.getElementById('prodDesc').value = p.descripcion || '';
-  document.getElementById('prodVoltaje').value = p.voltaje || '';
-  document.getElementById('prodIlum').value = p.iluminacion || '';
+  document.getElementById('prodVoltaje').value = esSuj ? (p.trabajoCarga || '') : (p.voltaje || '');
+  document.getElementById('prodIlum').value = esSuj ? (p.color || '') : (p.iluminacion || '');
   document.getElementById('prodLargo').value = p.largo || '';
   document.getElementById('prodAncho').value = p.ancho || '';
-  document.getElementById('prodAlto').value = p.alto || '';
-  document.getElementById('prodContiene').value = p.contiene || '';
+  document.getElementById('prodAlto').value = esSuj ? (p.peso || '') : (p.alto || '');
+  document.getElementById('prodContiene').value = esSuj ? (p.cargaRotura || '') : (p.contiene || '');
   document.getElementById('modalProducto').classList.remove('hidden');
 }
 
@@ -431,12 +452,19 @@ function generarProductosHTML() {
         ${p.marca ? `<p class="marca">Marca: ${escapeHtml(p.marca)}</p>` : ''}
         ${p.precio ? `<p class="precio">${formatMoney(p.precio)}</p>` : ''}
         ${p.descripcion ? `<p class="desc">${escapeHtml(p.descripcion)}</p>` : ''}
+        ${p.categoria === 'sujecion' ? `
+        ${p.color ? `<p>Color: ${escapeHtml(p.color)}</p>` : ''}
+        ${p.trabajoCarga ? `<p>Trabajo de carga: ${escapeHtml(p.trabajoCarga)}</p>` : ''}
+        ${p.largo ? `<p>Largo: ${escapeHtml(p.largo)}</p>` : ''}
+        ${p.ancho ? `<p>Ancho de cinta: ${escapeHtml(p.ancho)}</p>` : ''}
+        ${p.peso ? `<p>Peso: ${escapeHtml(p.peso)}</p>` : ''}
+        ${p.cargaRotura ? `<p>Carga de rotura: ${escapeHtml(p.cargaRotura)}</p>` : ''}` : `
         ${p.voltaje ? `<p>Voltaje: ${escapeHtml(p.voltaje)}</p>` : ''}
         ${p.iluminacion ? `<p>Iluminacion: ${escapeHtml(p.iluminacion)}</p>` : ''}
         ${p.largo ? `<p>Largo: ${escapeHtml(p.largo)}</p>` : ''}
         ${p.ancho ? `<p>Ancho: ${escapeHtml(p.ancho)}</p>` : ''}
         ${p.alto ? `<p>Alto: ${escapeHtml(p.alto)}</p>` : ''}
-        ${p.contiene ? `<p>Contiene: ${escapeHtml(p.contiene)}</p>` : ''}
+        ${p.contiene ? `<p>Contiene: ${escapeHtml(p.contiene)}</p>` : ''}`}
         <button class="btn-consulta" onclick="agregarConsulta('${escapeHtml(p.nombre)}', '${escapeHtml(p.codigo)}')">Consultar</button>
       </article>`;
     });

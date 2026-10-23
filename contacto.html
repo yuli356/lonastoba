@@ -1,119 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Lonas Toba</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        .hero-contacto {
+            padding: 140px 5% 60px;
+            text-align: center;
+        }
+        .hero-contacto h1 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .hero-contacto p {
+            font-size: 18px;
+            color: #ccdee4;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
 
-<meta charset="UTF-8">
+        .contacto {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .info-contacto {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 35px;
+        }
+        .info-contacto h2 {
+            color: white;
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #da261c;
+            display: inline-block;
+        }
+        .info-contacto p {
+            color: #ccdee4;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .info-contacto p strong {
+            color: white;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .info-contacto a {
+            color: #ff4438;
+            text-decoration: none;
+        }
+        .info-contacto a:hover {
+            text-decoration: underline;
+        }
 
-<title>Contacto | Lonas Toba</title>
+        .formulario {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 35px;
+        }
+        .formulario h2 {
+            color: white;
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #da261c;
+            display: inline-block;
+        }
+        .formulario input,
+        .formulario textarea {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            color: white;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .formulario input::placeholder,
+        .formulario textarea::placeholder {
+            color: #8899aa;
+        }
+        .formulario input:focus,
+        .formulario textarea:focus {
+            outline: none;
+            border-color: #da261c;
+            box-shadow: 0 0 0 3px rgba(218,38,28,0.15);
+        }
+        .formulario textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .formulario button {
+            width: 100%;
+            padding: 16px;
+            background: #da261c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .formulario button:hover {
+            background: #ff4438;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(218,38,28,0.3);
+        }
 
-<link rel="stylesheet" href="style.css">
+        .mapa {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+        .mapa h2 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+        .mapa-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .mapa iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            display: block;
+        }
+        .mapa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            background: #4285F4;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(66,133,244,0.3);
+            transition: all 0.3s;
+        }
+        .mapa-btn:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+        }
+        .mapa-btn i {
+            font-size: 18px;
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+        @media (max-width: 768px) {
+            .contacto {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .hero-contacto h1 { font-size: 32px; }
+            .hero-contacto { padding: 100px 5% 40px; }
+            .mapa iframe { height: 300px; }
+            .info-contacto, .formulario { padding: 25px; }
+        }
+    </style>
+<base target="_blank">
 </head>
-
 <body>
 
 <header>
-
-<div class="logo">
-<img src="img/logo/logo.jpeg" alt="Lonas Toba">
-</div>
-
-<nav>
-
-<a href="index.html">Inicio</a>
-
-<a href="productos.html">Productos de iluminación y varios</a>
-
-<a href="lonas.html">Lonas por metros o rollos</a>
-
-<a href="confeccion.html">Confección</a>
-
-<a class="activo" href="contacto.html">Contacto</a>
-
-</nav>
-
+    <div class="logo">
+        <img src="img/logo/logo.jpeg" alt="Lonas Toba">
+    </div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos de iluminación y varios</a>
+        <a href="lonas.html">Sonne y Pintesint</a>
+        <a href="confeccion.html">Confección</a>
+        <a class="activo" href="contacto.html">Contacto</a>
+    </nav>
 </header>
 
 <main>
+    <section class="hero-contacto">
+        <h1>Contactanos</h1>
+        <p>Estamos para ayudarte y asesorarte en todo lo que necesites.</p>
+    </section>
 
-<section class="hero-contacto">
+    <section class="contacto">
+        <div class="info-contacto">
+            <h2>Información</h2>
+            <p>
+                <strong>📍 Dirección</strong>
+                Ruta 16 y Ruta 95<br>
+                Presidencia Roque Sáenz Peña, Chaco
+            </p>
+            <p>
+                <strong>☎️ Local</strong>
+                <a href="tel:+5493644350306">+54 9 3644 350306</a>
+            </p>
+            <p>
+                <strong>☎️ Número de consultas</strong>
+                <a href="tel:+5493644159455">+54 9 3644 159455</a>
+            </p>
+            <p>
+                <strong>☎️ Dueña</strong>
+                <a href="tel:+5493644680073">+54 9 3644 680073</a>
+            </p>
+            <p>
+                <strong>✉️ Email</strong>
+                <a href="mailto:silviacaceres14@gmail.com">silviacaceres14@gmail.com</a>
+            </p>
+        </div>
 
-<h1>Contactanos</h1>
+        <div class="formulario">
+            <h2>Enviá tu consulta</h2>
+            <input type="text" placeholder="Nombre">
+            <input type="tel" placeholder="Teléfono">
+            <input type="email" placeholder="Correo electrónico">
+            <textarea placeholder="Escribí tu consulta"></textarea>
+            <button>Enviar consulta</button>
+        </div>
+    </section>
 
-<p>
-Estamos para ayudarte y asesorarte en todo lo que necesites.
-</p>
-
-</section>
-
-<section class="contacto">
-
-<div class="info-contacto">
-
-<h2>Información</h2>
-
-<p><strong>📍 Dirección</strong><br>
-Ruta 16 y Ruta 95<br>
-Presidencia Roque Sáenz Peña, Chaco
-</p>
-
-<p><strong>☎️ Lonera</strong><br>
-+54 9 3644 350306
-</p>
-
-<p><strong>☎️ Local</strong><br>
-+54 9 3644 412844
-</p>
-
-<p><strong>☎️ Dueña</strong><br>
-+54 9 3644 680073
-</p>
-
-<p><strong>✉️ Email</strong><br>
-silviacaceres14@gmail.com
-</p>
-
-</div>
-
-<div class="formulario">
-
-<h2>Enviá tu consulta</h2>
-
-<input type="text" placeholder="Nombre">
-
-<input type="tel" placeholder="Teléfono">
-
-<input type="email" placeholder="Correo electrónico">
-
-<textarea placeholder="Escribí tu consulta"></textarea>
-
-<button>Enviar consulta</button>
-
-</div>
-
-</section>
-
-<section class="mapa">
-
-<h2>¿Dónde estamos?</h2>
-
-<iframe
-src= https://maps.app.goo.gl/qcbsjDjrEGKMn3ak9?g_st
-allowfullscreen=""
-loading="lazy">
-</iframe>
-
-</section>
-
+    <section class="mapa">
+        <h2>¿Dónde estamos?</h2>
+        <div class="mapa-wrapper">
+            <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-60.46%2C-26.80%2C-60.42%2C-26.77&amp;layer=mapnik&amp;marker=-26.7847%2C-60.4413"
+                allowfullscreen=""
+                loading="lazy">
+            </iframe>
+        </div>
+        <a href="https://maps.app.goo.gl/qcbsjDjrEGKMn3ak9" class="mapa-btn" target="_blank">
+            <i class="fas fa-location-arrow"></i> Abrir en Google Maps
+        </a>
+    </section>
 </main>
 
 <script src="script.js"></script>
-
 </body>
-
 </html>

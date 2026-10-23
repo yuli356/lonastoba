@@ -200,6 +200,98 @@ function mostrarNotificacion(mensaje) {
 }
 
 // ============================================
+// SLIDER INICIO — Automático + Controles
+// ============================================
+(function() {
+    const slides = document.querySelectorAll('.inicio-slide');
+    const dotsContainer = document.querySelector('.slider-dots');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    const playPauseBtn = document.querySelector('.slider-play-pause');
+    
+    if (!slides.length) return;
+    
+    // Generar dots automáticamente según cantidad de fotos
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        slides.forEach((_, i) => {
+            const dot = document.createElement('span');
+            dot.className = 'dot' + (i === 0 ? ' activo' : '');
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                if (isPlaying) start();
+            });
+            dotsContainer.appendChild(dot);
+        });
+    }
+    const dots = document.querySelectorAll('.slider-dots .dot');
+    
+    let current = 0;
+    let interval;
+    let isPlaying = true;
+    const delay = 4000;
+    
+    function showSlide(index) {
+        slides.forEach((s, i) => {
+            s.classList.toggle('activo', i === index);
+        });
+        if (dots.length) {
+            dots.forEach((d, i) => {
+                d.classList.toggle('activo', i === index);
+            });
+        }
+        current = index;
+    }
+    
+    function next() {
+        showSlide((current + 1) % slides.length);
+    }
+    
+    function prev() {
+        showSlide((current - 1 + slides.length) % slides.length);
+    }
+    
+    function start() {
+        if (interval) clearInterval(interval);
+        interval = setInterval(next, delay);
+        isPlaying = true;
+        if (playPauseBtn) {
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            playPauseBtn.setAttribute('aria-label', 'Pausar');
+        }
+    }
+    
+    function stop() {
+        if (interval) clearInterval(interval);
+        isPlaying = false;
+        if (playPauseBtn) {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playPauseBtn.setAttribute('aria-label', 'Reproducir');
+        }
+    }
+    
+    function toggle() {
+        if (isPlaying) stop();
+        else start();
+    }
+    
+    if (nextBtn) nextBtn.addEventListener('click', () => { next(); if (isPlaying) start(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); if (isPlaying) start(); });
+    if (playPauseBtn) playPauseBtn.addEventListener('click', toggle);
+    
+    if (dots.length) {
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                if (isPlaying) start();
+            });
+        });
+    }
+    
+    start();
+})();
+
+// ============================================
 // INICIALIZAR
 // ============================================
 document.addEventListener("DOMContentLoaded", function() {
@@ -210,4 +302,37 @@ document.addEventListener("DOMContentLoaded", function() {
     if (overlay) {
         overlay.addEventListener("click", cerrarCarrito);
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.formulario button');
+    
+    btn.addEventListener('click', function(e) {
+        e.preventDefault(); // Evita que recargue la página
+        
+        // Leemos los valores de los campos
+        const nombre = document.querySelector('.formulario input[type="text"]').value.trim();
+        const telefono = document.querySelector('.formulario input[type="tel"]').value.trim();
+        const email = document.querySelector('.formulario input[type="email"]').value.trim();
+        const consulta = document.querySelector('.formulario textarea').value.trim();
+        
+        // Validamos que haya algo escrito
+        if (!nombre || !consulta) {
+            alert('Por favor completá al menos tu nombre y la consulta.');
+            return;
+        }
+        
+        // Armamos el mensaje
+        let mensaje = `*Nueva consulta desde la web*%0A%0A`;
+        mensaje += `*Nombre:* ${nombre}%0A`;
+        if (telefono) mensaje += `*Teléfono:* ${telefono}%0A`;
+        if (email) mensaje += `*Email:* ${email}%0A`;
+        mensaje += `%0A*Consulta:*%0A${consulta}`;
+        
+        // Número de consultas (sin + ni espacios)
+        const numero = '5493644159455';
+        
+        // Abrimos WhatsApp
+        window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+    });
 });

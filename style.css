@@ -184,16 +184,26 @@ TARJETAS
 
 .beneficios{
 width:90%;
-margin:20px auto 40px;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
+margin:60px auto 40px;
+padding-top:20px;
+}
+.beneficios h2{
+text-align:center;
+font-size:36px;
+font-weight:800;
+color:white;
+margin-bottom:10px;
+}
+.beneficios > .container > p{
+text-align:center;
+color:#aaccdd;
+font-size:16px;
+margin-bottom:10px;
 }
 
 .tarjetas{
     max-width:1400px;
-    margin:auto;
-    margin-top:-70px;
+    margin:40px auto 0;
     padding:0 50px 80px;
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -205,7 +215,7 @@ gap:20px;
 .tarjeta{
     background:rgba(255,255,255,.97);
     border-radius:22px;
-    padding:35px;
+    padding:40px 35px;
     transition:.35s;
     box-shadow:0 15px 35px rgba(0,0,0,.20);
     overflow:hidden;
@@ -579,25 +589,31 @@ MAPA
 }
 
 /* ===================== */
-/* CARRUSEL */
+/* BANNER SUPERIOR */
 /* ===================== */
 
 .slider{
     width:100%;
-    height:300px;
+    height:auto;
+    max-height:420px;
     margin-top:90px;
     overflow:hidden;
     position:relative;
+    background:#02182e;
 }
 
 .slides{
     width:100%;
     height:100%;
     position:relative;
+    aspect-ratio:16 / 5;
+    min-height:220px;
+    max-height:420px;
 }
 
 .slide{
     position:absolute;
+    inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
@@ -637,32 +653,62 @@ CARRUSEL DEL INICIO
     opacity:1;
 }
 
-/*==================================
-CARRUSEL PREMIUM INICIO
-==================================*/
-
-.slider-inicio{
-    width:100%;
-    max-width:620px;
-    height:430px;
-    position:relative;
-    overflow:hidden;
-    border-radius:24px;
-    box-shadow:0 25px 60px rgba(0,0,0,.35);
+/* ===== CONTROLES DEL SLIDER INICIO ===== */
+.slider-inicio-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+    background: rgba(0,0,0,0.45);
+    padding: 8px 16px;
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
 }
 
-.inicio-slide{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    opacity:0;
-    transition:1s;
+.slider-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.9);
+    color: #1a1a1a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s ease;
 }
 
-.inicio-slide.activo{
-    opacity:1;
+.slider-btn:hover {
+    background: #da261c;
+    color: white;
+    transform: scale(1.1);
+}
+
+.slider-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.activo {
+    background: #da261c;
+    width: 24px;
+    border-radius: 6px;
 }
 
 /* ============================================
@@ -1035,54 +1081,6 @@ CARRUSEL PREMIUM INICIO
 }
 
 /* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 768px) {
-    .carrito-panel {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 20px 20px 0 0;
-        top: auto;
-        bottom: 0;
-        height: 85vh;
-        transform: translateY(100%);
-    }
-    .carrito-panel.activo {
-        transform: translateY(0);
-    }
-    .carrito-overlay {
-        background: rgba(0,0,0,0.35);
-    }
-    .producto-card {
-        border-radius: 14px;
-    }
-    .producto-nombre {
-        font-size: 15px;
-    }
-    .producto-dato {
-        font-size: 12px;
-    }
-    .carrito-float-btn {
-        right: 16px;
-        bottom: 16px;
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .producto-nombre {
-        font-size: 14px;
-    }
-    .producto-body {
-        padding: 14px;
-    }
-}
-
-
-/* ============================================
    ARREGLOS HOME — Logo + Carrusel
    ============================================ */
 
@@ -1179,5 +1177,200 @@ CARRUSEL PREMIUM INICIO
     }
     .logo img {
         height: 50px;
+    }
+}
+/* ============================================
+   RESPONSIVE GENERAL — CELULAR
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* HEADER */
+    header {
+        padding: 0 20px;
+        height: 70px;
+    }
+    
+    .logo img {
+        height: 50px;
+    }
+    
+    nav {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+    
+    nav a {
+        font-size: 13px;
+        padding: 4px 0;
+    }
+    
+    /* INICIO */
+    .inicio {
+        padding: 100px 20px 50px;
+    }
+    
+    .contenido {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        width: 100%;
+    }
+    
+    .texto h1 {
+        font-size: 32px;
+    }
+    
+    .texto p {
+        font-size: 16px;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 280px;
+        height: 52px;
+        font-size: 16px;
+    }
+    
+    .slider-inicio {
+        max-width: 100%;
+        height: 280px;
+    }
+    
+    /* CONTROLES SLIDER EN MOBILE */
+    .slider-inicio-controls {
+        padding: 6px 12px;
+        gap: 8px;
+    }
+    .slider-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 11px;
+    }
+    
+    /* TARJETAS */
+    .beneficios,
+    .tarjetas {
+        grid-template-columns: 1fr;
+        padding: 0 20px 60px;
+    }
+    
+    .tarjeta h3 {
+        font-size: 22px;
+    }
+    
+    /* PRODUCTOS */
+    .pagina {
+        padding: 100px 20px 40px;
+    }
+    
+    .barra-filtros select,
+    .barra-filtros input {
+        min-width: 100%;
+        width: 100%;
+    }
+    
+    /* TABLA LONAS — Scroll horizontal */
+    .catalogo-lonas {
+        overflow-x: auto;
+        width: 100%;
+        padding: 0 10px;
+    }
+    
+    .tabla-lonas {
+        min-width: 600px;
+    }
+    
+    /* CONFECCIÓN */
+    .hero-confeccion h1 {
+        font-size: 32px;
+    }
+    
+    .hero-confeccion p {
+        font-size: 16px;
+    }
+    
+    .galeria-confeccion {
+        grid-template-columns: 1fr;
+    }
+    
+    /* CONTACTO */
+    .hero-contacto h1 {
+        font-size: 36px;
+    }
+    
+    .hero-contacto p {
+        font-size: 16px;
+    }
+    
+    .contacto {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        width: 95%;
+    }
+    
+    .info-contacto,
+    .formulario {
+        padding: 25px;
+    }
+    
+    .formulario h2,
+    .info-contacto h2 {
+        font-size: 26px;
+    }
+    
+    /* MAPA */
+    .mapa iframe {
+        height: 280px;
+    }
+    
+    /* FOOTER */
+    .footer-contenedor {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    /* SLIDER PRINCIPAL */
+    .slider {
+        min-height: 200px;
+    }
+    
+    .slides {
+        aspect-ratio: 16 / 9;
+        min-height: 200px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE — CELULAR MUY CHICO
+   ============================================ */
+
+@media (max-width: 480px) {
+    
+    .texto h1 {
+        font-size: 26px;
+    }
+    
+    .hero-confeccion h1 {
+        font-size: 26px;
+    }
+    
+    .hero-contacto h1 {
+        font-size: 28px;
+    }
+    
+    .tarjeta {
+        padding: 25px;
+    }
+    
+    .tabla-lonas th,
+    .tabla-lonas td {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .producto-card {
+        border-radius: 12px;
     }
 }

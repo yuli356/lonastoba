@@ -1,197 +1,624 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lonas Toba</title>
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lonas Toba — Iluminación LED, Lonas y Accesorios para el Transporte</title>
+    <meta name="description" content="Más de 20 años de experiencia en lonas, iluminación LED, ratchets y accesorios para camiones. Envíos a todo el país. Presidencia Roque Sáenz Peña, Chaco.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ===== LISTA DE ÍTEMS ===== */
+        .lt-items-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+        }
+        .lt-items-lista li {
+            color: #ccdee4;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            padding-left: 22px;
+            position: relative;
+        }
+        .lt-items-lista li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background: #da261c;
+            border-radius: 50%;
+        }
+
+        /* ===== ICONOS DE VEHÍCULOS ===== */
+        .lt-vehicles-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+        .lt-vehicles-box span {
+            color: #8899aa;
+            font-size: 13px;
+        }
+        .lt-vehicle-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccdee4;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .lt-vehicle-icon:hover {
+            background: rgba(218,38,28,0.15);
+            border-color: #da261c;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== MENÚ HAMBURGUESA ===== */
+        .lt-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        /* Menú mobile */
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(2, 10, 35, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 100px 30px 30px;
+                gap: 20px;
+                transform: translateX(100%);
+                transition: transform 0.35s ease;
+                z-index: 9998;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.4);
+            }
+            nav.activo {
+                transform: translateX(0);
+            }
+            nav a {
+                font-size: 18px;
+                width: 100%;
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.08);
+            }
+            nav a::after {
+                display: none;
+            }
+            .lt-menu-btn {
+                display: block;
+            }
+        }
+
+        /* ===== PRODUCTOS DESTACADOS ===== */
+        .lt-destacados {
+            padding: 60px 5%;
+            background: linear-gradient(180deg, #02182e 0%, #022f56 100%);
+        }
+        .lt-destacados h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+        }
+        .lt-destacados > p {
+            text-align: center;
+            color: #8899aa;
+            font-size: 16px;
+            margin-bottom: 35px;
+        }
+        .lt-dest-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .lt-dest-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+        }
+        .lt-dest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+        .lt-dest-img {
+            height: 180px;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .lt-dest-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .lt-dest-body {
+            padding: 18px;
+        }
+        .lt-dest-cat {
+            font-size: 11px;
+            font-weight: 700;
+            color: #da261c;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .lt-dest-body h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin: 6px 0 8px;
+        }
+        .lt-dest-body p {
+            font-size: 14px;
+            color: #667788;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .lt-dest-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .lt-dest-btn:hover { background: #333; }
+        .lt-dest-btn--blue { background: #003366; }
+        .lt-dest-btn--blue:hover { background: #004488; }
+
+        /* ===== BADGES CONFIANZA ===== */
+        .lt-badges {
+            padding: 35px 5%;
+            background: #02182e;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .lt-badges-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .lt-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ccdee4;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .lt-badge i { color: #da261c; font-size: 18px; }
+
+        /* ===== CTA WHATSAPP ===== */
+        .lt-cta {
+            padding: 60px 5%;
+            background: linear-gradient(180deg, #022f56 0%, #02182e 100%);
+            text-align: center;
+        }
+        .lt-cta-box {
+            background: linear-gradient(135deg, #003366, #0c1e8b);
+            border-radius: 20px;
+            padding: 45px 30px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+        }
+        .lt-cta-box h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .lt-cta-box p {
+            font-size: 16px;
+            color: #aaccdd;
+            margin-bottom: 22px;
+        }
+        .lt-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37,211,102,0.3);
+            transition: all 0.3s;
+        }
+        .lt-cta-btn:hover { background: #128c7e; transform: translateY(-2px); }
+        .lt-cta-tels {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+        .lt-cta-tels a {
+            color: #aaccdd;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .lt-cta-tels a:hover { color: white; }
+        .lt-cta-tels i { color: #da261c; }
+
+        /* ===== FOOTER MEJORADO ===== */
+        .lt-footer-brand { display: flex; flex-direction: column; gap: 12px; }
+        .lt-footer-logo { height: 50px; width: auto; object-fit: contain; }
+        .lt-footer-brand p { color: #8899aa; font-size: 13px; line-height: 1.7; max-width: 260px; }
+        .lt-footer-social { display: flex; gap: 8px; margin-top: 4px; }
+        .lt-footer-social a {
+            width: 36px; height: 36px; border-radius: 8px;
+            background: rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            color: #ccdee4; font-size: 14px; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .lt-footer-social a:hover { background: #da261c; color: white; transform: translateY(-2px); }
+        .lt-footer-col h4 { font-size: 16px; font-weight: 700; color: white; margin-bottom: 14px; }
+        .lt-footer-col a { display: block; color: #8899aa; text-decoration: none; font-size: 13px; margin-bottom: 8px; transition: color 0.3s; }
+        .lt-footer-col a:hover { color: #da261c; }
+        .lt-footer-col p { color: #8899aa; font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
+        .lt-footer-col p i { color: #da261c; margin-right: 6px; width: 14px; }
+
+        /* ===== WHATSAPP FLOTANTE ===== */
+        .lt-wsp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 6px 25px rgba(37,211,102,0.4);
+            z-index: 9999;
+            animation: ltWspPulse 2s infinite;
+        }
+        .lt-wsp:hover { transform: scale(1.1); background: #128c7e; }
+        @keyframes ltWspPulse {
+            0%,100%{box-shadow:0 6px 25px rgba(37,211,102,0.4);}
+            50%{box-shadow:0 6px 35px rgba(37,211,102,0.7);}
+        }
+        .lt-wsp-text {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .lt-dest-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .lt-dest-img { height: 140px; }
+            .lt-dest-body { padding: 12px; }
+            .lt-dest-body h3 { font-size: 14px; }
+            .lt-dest-body p { font-size: 12px; }
+            .lt-dest-btn { padding: 8px; font-size: 12px; }
+            .lt-badges-grid { gap: 14px; }
+            .lt-badge { font-size: 12px; }
+            .lt-cta-box { padding: 30px 20px; margin: 0 10px; }
+            .lt-cta-box h2 { font-size: 22px; }
+            .lt-cta-btn { width: 100%; justify-content: center; padding: 14px; }
+            .lt-cta-tels { flex-direction: column; gap: 8px; }
+            .lt-footer-grid { grid-template-columns: 1fr !important; text-align: center; gap: 30px !important; padding: 35px 5% !important; }
+            .lt-footer-brand { align-items: center; }
+            .lt-footer-brand p { max-width: 100%; }
+            .lt-footer-social { justify-content: center; }
+            .lt-wsp { width: 50px; height: 50px; font-size: 24px; bottom: 14px; right: 14px; }
+        }
+        @media (max-width: 400px) {
+            .lt-dest-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 <base target="_blank">
-
-<style>
- 
-</style>
-
 <base target="_blank">
 </head>
 <body>
 
-<section class="slider">
-
-    <header>
-
-    <div class="logo">
-        <img src="img/logo/logo.jpeg" alt="Lonas toba">
-        <span class="logo-texto"><span class="lonas"></span><span class="toba"></span></span>
-    </div>
-
-    <nav>
+<!-- HEADER -->
+<header>
+    <a href="index.html" class="logo">
+        <img src="img/logo/logo.jpeg" alt="Lonas Toba">
+    </a>
+    <button class="lt-menu-btn" id="menuBtn" aria-label="Abrir menú">
+        <i class="fas fa-bars"></i>
+    </button>
+    <nav id="mainNav">
         <a class="activo" href="index.html">Inicio</a>
-        <a href="productos.html">Productos de iluminación y varios</a>
-        <a href="lonas.html">Lonas por metros o rollos</a>
+        <a href="productos.html">Productos</a>
+        <a href="lonas.html">Sonne y Pintesint</a>
         <a href="confeccion.html">Confección</a>
         <a href="contacto.html">Contacto</a>
     </nav>
-
 </header>
 
+<!-- SLIDER BANNER -->
+<div class="slider">
     <div class="slides">
-    <img class="slide activo" src="img/carrusel/carrusel.jpeg" alt="Lonas Toba">
-</div>
-
-</section>
-
-<section id="inicio" class="inicio">
-
-<div class="contenido">
-
-<div class="texto">
-
-<h1>
-
-Garantizamos calidad en todos nuestros productos.
-
-</h1>
-
-<p>
-
-Especialistas en confección de lonas y todo tipo de iluminación led, radchet,
-entre otros productos duraderos
-y soluciones para lo que usted necesite.
-
-</p>
-
-<a href="productos.html" class="btn">
-
-Ver catálogo
-
-</a>
-
-</div>
-
-<div class="imagen">
-
-    <div class="slider-inicio">
-
-        <img class="inicio-slide activo" src="img/inicio/inicio1.jpeg" alt="Imagen 1">
-
-        <img class="inicio-slide" src="img/inicio/inicio2.jpeg" alt="Imagen 2">
-
-        <img class="inicio-slide" src="img/inicio/inicio3.jpeg" alt="Imagen 3">
-
-        <img class="inicio-slide" src="img/inicio/inicio4.jpeg" alt="Imagen 4">
-
+        <img src="img/carrusel/carrusel.jpeg" class="slide activo" alt="Lonas Toba">
     </div>
-
 </div>
 
+<!-- INICIO -->
+<section class="inicio">
+    <div class="contenido">
+        <div class="texto">
+            <h1>Garantizamos calidad en todos nuestros productos.</h1>
+            <ul class="lt-items-lista">
+                <li>Trabajamos para el transporte, el agro, el comercio y el hogar.</li>
+                <li>Nos especializamos en la confección de todo tipo de lonas, adaptadas a cada necesidad.</li>
+                <li>Ofrecemos la más completa variedad de soluciones para sujeción y protección de cargas.</li>
+                <li>
+                    Contamos con una amplia línea de iluminación para todo tipo de vehículos
+                    <div class="lt-vehicles-box">
+                        <span>Aplica a:</span>
+                        <div class="lt-vehicle-icon" title="Camión"><i class="fas fa-truck"></i></div>
+                        <div class="lt-vehicle-icon" title="Camioneta"><i class="fas fa-truck-pickup"></i></div>
+                        <div class="lt-vehicle-icon" title="Auto"><i class="fas fa-car"></i></div>
+                        <div class="lt-vehicle-icon" title="Moto"><i class="fas fa-motorcycle"></i></div>
+                    </div>
+                </li>
+            </ul>
+            <a href="productos.html" class="btn">Ver catálogo</a>
+        </div>
+
+        <!-- SLIDER INICIO CON CONTROLES -->
+        <div class="slider-inicio">
+            <img src="img/inicio/Inicio1.jpeg" alt="Local Lonas Toba" class="inicio-slide activo">
+            <img src="img/inicio/Inicio2.jpeg" alt="Nuestros productos" class="inicio-slide">
+            <img src="img/inicio/Inicio3.jpeg" alt="Atención personalizada" class="inicio-slide">
+            <img src="img/inicio/Inicio4.jpeg" alt="Nuestros servicios" class="inicio-slide">
+
+            <div class="slider-inicio-controls">
+                <button class="slider-btn slider-prev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-dots"></div>
+                <button class="slider-btn slider-play-pause" aria-label="Pausar"><i class="fas fa-pause"></i></button>
+                <button class="slider-btn slider-next" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- PRODUCTOS DESTACADOS -->
+<section class="lt-destacados">
+    <h2>Productos destacados</h2>
+    <p>Lo que más eligen nuestros clientes</p>
+    <div class="lt-dest-grid">
+        <div class="lt-dest-card">
+            <div class="lt-dest-img">
+                <img src="img/productos/faros-varios.jpeg" alt="Faros de todo tipo" loading="lazy">
+            </div>
+            <div class="lt-dest-body">
+                <div class="lt-dest-cat">Faros</div>
+                <h3>Mas modelos, más opciones y mas soluciones para tu vehículo</h3>
+                <p>Faros de alta calidad para todos los tipos de vehículos.</p>
+                <a href="https://wa.me/5493644350306?text=Hola,%20me%20interesan%20los%20Faros%20Traseros%20Electronicos%20Baiml" class="lt-dest-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+        </div>
+        <div class="lt-dest-card">
+            <div class="lt-dest-img">
+                <img src="img/lonas/Lona1.jpeg" alt="Lona y coversol" loading="lazy">
+            </div>
+            <div class="lt-dest-body">
+                <div class="lt-dest-cat">Lonas</div>
+                <h3>Lona y Coversol</h3>
+                <p>Ancho 1.50m.</p>
+                <a href="lonas.html" class="lt-dest-btn lt-dest-btn--blue">
+                    <i class="fas fa-table"></i> Ver medidas
+                </a>
+            </div>
+        </div>
+        <div class="lt-dest-card">
+            <div class="lt-dest-img">
+                <img src="img/productos/ratchet1.jpeg" alt="Ratchet 2 pulgadas" loading="lazy">
+            </div>
+            <div class="lt-dest-body">
+                <div class="lt-dest-cat">Ratchets</div>
+                <h3>Ratchet 2" x 8m</h3>
+                <p>Resistencia 2 ton. Uso pesado.</p>
+                <a href="https://wa.me/5493644350306?text=Hola,%20me%20interesa%20el%20Ratchet%202%20pulgadas" class="lt-dest-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+        </div>
+        <div class="lt-dest-card">
+            <div class="lt-dest-img">
+                <img src="img/productos/foco1.jpeg" alt="Lámpara LED H4" loading="lazy">
+            </div>
+            <div class="lt-dest-body">
+                <div class="lt-dest-cat">Lámparas LED</div>
+                <h3>Lámpara LED H4 12V/24V</h3>
+                <p>Alta potencia. Luz 6000K.</p>
+                <a href="https://wa.me/5493644350306?text=Hola,%20me%20interesa%20la%20Lampara%20LED%20H4" class="lt-dest-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Consultar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- CATEGORÍAS -->
 <section class="beneficios">
-
-    <div class="tarjeta">
-        <h3>Más de 20 años</h3>
-        <p>Calidad que cubre resultados que rinden.</p>
+    <div class="container">
+        <h2>Nuestros productos</h2>
+        <p>Elegí una categoría y explorá todo lo que tenemos para ofrecerte</p>
+        <div class="tarjetas">
+            <a href="productos.html" class="tarjeta">
+                <div class="tarjeta-icono" style="background:linear-gradient(135deg,#da261c,#ff4438);">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3>Ratchet</h3>
+                <p>Sujeción de carga pesada para camiones y acoplados</p>
+            </a>
+            <a href="productos.html" class="tarjeta">
+                <div class="tarjeta-icono" style="background:linear-gradient(135deg,#0c1e8b,#1a3dbd);">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Iluminación</h3>
+                <p>Faros, lámparas LED y barras para todo tipo de vehículos</p>
+            </a>
+            <a href="lonas.html" class="tarjeta">
+                <div class="tarjeta-icono" style="background:linear-gradient(135deg,#003366,#0055aa);">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3>Sonne y Pintesint</h3>
+                <p>Sonne y Pintesint — productos de alta calidad para tu proyecto</p>
+            </a>
+            <a href="confeccion.html" class="tarjeta">
+                <div class="tarjeta-icono" style="background:linear-gradient(135deg,#4caf50,#66bb6a);">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <h3>Confección</h3>
+                <p>Lonas a medida, toldos, cerramientos y coberturas</p>
+            </a>
+        </div>
     </div>
-
-    <div class="tarjeta">
-        <h3>Primeras marcas</h3>
-        <p>Trabajamos con las mejores marcas del mercado.</p>
-    </div>
-
-    <div class="tarjeta">
-        <h3>Gran variedad</h3>
-        <p>Iluminación LED, lonas,sujeción de carga y confecciones para todo tipo de proyectos.</p>
-    </div>
-
-    <div class="tarjeta">
-        <h3>Atención personalizada</h3>
-        <p>Te asesoramos para que encuentres exactamente lo que necesitás.</p>
-    </div>
-
 </section>
 
+<!-- BADGES CONFIANZA -->
+<section class="lt-badges">
+    <div class="lt-badges-grid">
+        <div class="lt-badge"><i class="fas fa-truck-fast"></i><span>Envíos a todo el país</span></div>
+        <div class="lt-badge"><i class="fas fa-shield-halved"></i><span>Garantía de fábrica</span></div>
+        <div class="lt-badge"><i class="fas fa-handshake"></i><span>Atención personalizada</span></div>
+        <div class="lt-badge"><i class="fas fa-clock"></i><span>Respuesta inmediata</span></div>
+    </div>
+</section>
 
-<!-- PRODUCTOS -->
-
-
-
-<!-- LONAS -->
-
-
-
-<!-- CONFECCIÓN -->
-
-
-
-<!-- CONTACTO -->
-
-
+<!-- CTA WHATSAPP -->
+<section class="lt-cta">
+    <div class="lt-cta-box">
+        <h2>¿Tenés dudas o necesitás un presupuesto?</h2>
+        <p>Escribinos por WhatsApp y te respondemos al toque</p>
+        <a href="https://wa.me/5493644350306" class="lt-cta-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+        </a>
+        <div class="lt-cta-tels">
+            <a href="tel:+5493644350306"><i class="fas fa-phone"></i> 3644 350306</a>
+            <a href="tel:+5493644159455"><i class="fas fa-phone"></i> 3644 159455</a>
+        </div>
+    </div>
+</section>
 
 <!-- FOOTER -->
-
 <footer>
-
-<div class="footer-contenedor">
-
-<div class="footer-columna">
-
-<h3>LONAS <span>TOBA</span></h3>
-
-<p>Más de 10 años ofreciendo calidad, confianza y atención personalizada.</p>
-
-</div>
-
-<div class="footer-columna">
-
-<h4>Ubicación</h4>
-
-<p>Ruta 16 y Ruta 95</p>
-
-<p>Sáenz Peña - Chaco</p>
-
-</div>
-
-<div class="footer-columna">
-
-<h4>Contacto</h4>
-
-<p>📞 3644 350306</p>
-
-<p>📞 3644 159455</p>
-
-<p>📞 3644 680073</p>
-
-<p>✉️ silviacaceres14@gmail.com</p>
-
-</div>
-
-<div class="footer-columna">
-
-<h4>Redes</h4>
-
-<p>Instagram: @lonastoba</p>
-
-<p>TikTok: @lonas_toba</p>
-
-</div>
-
-</div>
-
-<div class="copyright">
-
-© 2026 Lonas Toba · Todos los derechos reservados.
-
-</div>
-
+    <div class="footer-contenedor" style="grid-template-columns:2fr 1fr 1fr 1.5fr; gap:35px; padding:45px 5%;">
+        <div class="footer-columna lt-footer-brand">
+            <img src="img/logo/logo.jpeg" alt="Lonas Toba" class="lt-footer-logo">
+            <p>Especialistas en confección de lonas, iluminación LED y accesorios para el transporte. Más de 20 años de trayectoria.</p>
+            <div class="lt-footer-social">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5493644350306" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div class="footer-columna lt-footer-col">
+            <h4>Productos</h4>
+            <a href="productos.html">Iluminación LED</a>
+            <a href="productos.html">Faros y lámparas</a>
+            <a href="lonas.html">Sonne y Pintesint</a>
+            <a href="productos.html">Ratchets</a>
+        </div>
+        <div class="footer-columna lt-footer-col">
+            <h4>Servicios</h4>
+            <a href="confeccion.html">Confección de lonas</a>
+            <a href="confeccion.html">Toldos</a>
+            <a href="confeccion.html">Cerramientos</a>
+        </div>
+        <div class="footer-columna lt-footer-col">
+            <h4>Contacto</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Ruta 16 y Ruta 95<br>Presidencia Roque Sáenz Peña, Chaco</p>
+            <p><i class="fab fa-whatsapp"></i> +54 9 3644 350306</p>
+            <p><i class="fas fa-phone"></i> +54 9 3644 159455</p>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2026 Lonas Toba. Todos los derechos reservados.
+    </div>
 </footer>
 
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/5493644350306" class="lt-wsp" target="_blank" aria-label="Consultar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="lt-wsp-text">Consultar</span>
+</a>
+
+<!-- SCRIPTS -->
 <script src="script.js"></script>
+<script>
+// Menú hamburguesa
+const menuBtn = document.getElementById('menuBtn');
+const mainNav = document.getElementById('mainNav');
+menuBtn.addEventListener('click', () => {
+    mainNav.classList.toggle('activo');
+    menuBtn.innerHTML = mainNav.classList.contains('activo')
+        ? '<i class="fas fa-times"></i>'
+        : '<i class="fas fa-bars"></i>';
+});
+</script>
 
 </body>
-
 </html>

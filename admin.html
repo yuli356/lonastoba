@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -6,7 +6,7 @@
 <title>Admin - Lonas Toba</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; }
+  body { font-family: 'Sego<e UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; }
   .hidden { display: none !important; }
 
   /* Login */
@@ -458,6 +458,44 @@
   </div>
 </div>
 
+<script>
+// ===== CAMPOS DEL FORMULARIO SEGUN CATEGORIA =====
+const CAMPOS_DEFAULT = {
+  prodVoltaje: ['Voltaje', 'Ej: 9-36V'],
+  prodIlum: ['Iluminacion', 'Ej: Rojo y Ambar'],
+  prodLargo: ['Largo', 'Ej: 190 mm'],
+  prodAncho: ['Ancho', 'Ej: 66 mm'],
+  prodAlto: ['Alto', 'Ej: 55 mm'],
+  prodContiene: ['Contiene', 'Ej: 1 Juego/s de 2 un.']
+};
+const CAMPOS_SUJECION = {
+  prodVoltaje: ['Trabajo de carga *', 'Ej: 2.000 kg (2 ton)'],
+  prodIlum: ['Color', 'Ej: Amarillo'],
+  prodLargo: ['Largo', 'Ej: 8 m'],
+  prodAncho: ['Ancho de cinta', 'Ej: 50 mm'],
+  prodAlto: ['Peso', 'Ej: 1,2 kg'],
+  prodContiene: ['Carga de rotura *', 'Ej: 6.000 kg']
+};
+function aplicarCamposCategoria(limpiar) {
+  const cat = document.getElementById('prodCategoria').value;
+  const mapa = (cat === 'sujecion') ? CAMPOS_SUJECION : CAMPOS_DEFAULT;
+  for (const id in mapa) {
+    const input = document.getElementById(id);
+    const label = input.closest('.form-group').querySelector('label');
+    label.textContent = mapa[id][0];
+    input.placeholder = mapa[id][1];
+    if (limpiar) input.value = '';
+  }
+  document.getElementById('prodDesc').placeholder = (cat === 'sujecion')
+    ? 'Ej: Ganchos doble J. Cinta de poliester de alta resistencia.'
+    : 'Ej: 1 Juego de 2 unidades. 9-36V. Rojo y Ambar.';
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('prodCategoria').addEventListener('change', function() {
+    aplicarCamposCategoria(true);
+  });
+});
+</script>
 <script src="admin.js"></script>
 </body>
 </html>
