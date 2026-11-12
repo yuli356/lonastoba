@@ -7,7 +7,7 @@ let carrito = JSON.parse(localStorage.getItem('carritoLonasToba')) || [];
 let carritoAbierto = false;
 
 // Número de WhatsApp — CAMBIÁ ESTO
-const telefono = "5493644159455";
+const telefono = "5493644412844";
 
 // ============================================
 // AGREGAR PRODUCTO (faros/iluminación)
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mensaje += `%0A*Consulta:*%0A${consulta}`;
         
         // Número de consultas (sin + ni espacios)
-        const numero = '5493644159455';
+        const numero = '5493644412844';
         
         // Abrimos WhatsApp
         window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
